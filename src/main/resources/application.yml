@@ -1,0 +1,62 @@
+spring:
+  liquibase:
+    change-log: 'classpath:/db/changelog/changelog-master.xml'
+tenant:
+  api:
+    datasource:
+      name: tenant
+      platform: POSTGRESQL
+      driverClassName: org.postgresql.Driver
+      jdbcUrl: jdbc:postgresql://localhost:5432/tenant?currentSchema=public
+      username: root
+      password: root
+      #jdbcUrl: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tenant}?currentSchema=${DB_SCHEMA:public}
+      #username: ${DB_USER:root}
+      #password: ${DB_PASSWORD:root}
+      minimumIdle: 5
+      maximumPoolSize: 10
+      idleTimeout: 30000
+      poolName: SpringBootJPAHikariCP
+      maxLifetime: 2000000
+      connectionTimeout: 20000
+      leakDetectionThreshold: 5000
+      auto-commit: false
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      database: POSTGRESQL
+      show-sql: true
+      properties:
+        hibernate:
+          id.new_generator_mappings: true
+          connection.provider_disables_autocommit: true
+          cache:
+            use_second_level_cache: false
+            use_query_cache: false
+          generate_statistics: false
+          temp.use_jdbc_metadata_defaults: false
+          ddl-auto: none
+          jdbc:
+            batch_size: ${BATCH_SIZE:1000}
+        order_inserts: true
+      generate-ddl: true
+    liquibase:
+      change-log: 'classpath:/db/changelog/changelog-master.xml'
+  private:
+    jpa:
+      database-platform: org.hibernate.dialect.Oracle10gDialect
+      database: ORACLE
+      show-sql: true
+      properties:
+        hibernate:
+          id.new_generator_mappings: true
+          connection.provider_disables_autocommit: true
+          cache:
+            use_second_level_cache: false
+            use_query_cache: false
+          generate_statistics: false
+          temp.use_jdbc_metadata_defaults: false
+          ddl-auto: none
+          jdbc:
+            batch_size: ${BATCH_SIZE:1000}
+        order_inserts: true
+      generate-ddl: true
